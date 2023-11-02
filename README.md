@@ -37,4 +37,38 @@ osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR')
 idn = osc.idn()
 print(idn)
 ```
+# Examples
 
+```
+from rigolRC import Rigol
+
+osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR') 
+
+# print identificator
+print(osc.idn())
+
+# save screnshoot to your PC
+osc.scrn_ext("C:\\img_osc", name="test_img")
+
+# save screnshoot to internal memory
+osc.scrn_int(name="test_img")
+
+# save & load setup
+osc.ssetup("set-for_glitch")
+osc.lsetup("set-for_glitch")
+
+# set grid brightness
+osc.grid(100)
+
+# get wave RAW
+wave, wave_size = osc.get_wave_raw(ch=1, start_position=0, points=100000)
+
+# get wave only from display
+wave, wave_size = osc.get_wave_norm(ch=1)
+
+# set trigger mode: single
+osc.trig_single()
+
+# get trigger position
+osc.get_trig_position()
+```
