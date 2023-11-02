@@ -1,4 +1,4 @@
-# rigolRC
+# rigol-rc
 # Library for RIGOL oscilloscope remote control library
 ## **Disclaimer**
 
