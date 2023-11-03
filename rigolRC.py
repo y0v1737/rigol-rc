@@ -12,7 +12,11 @@ class Rigol:
         return self.inst.query("*IDN?")
 
     def expstr2int(self, str):
-        return float(str.split("E")[0]) * (10 ** int(str.split("E")[1], 10) )
+        n = str.split("E")
+        if len(n) == 1:
+            return float(n[0])
+        elif len(n) == 2:
+            return float(n[0]) * (10 ** int(n[1], 10))
         
     # Save screen to internal drive     
     def scrn_int(self, drive="C", name=""):
