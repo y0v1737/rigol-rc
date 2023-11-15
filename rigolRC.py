@@ -126,7 +126,7 @@ class Rigol:
     # {AUTO|1k|10k|100k|1M|10M|25M|50M|100M|200M} - discrete
     # Example: set_memdepth("10M")
     def set_memdepth(self, md):
-        self.inst.query(":ACQuire:MDEPth ", str(md))
+        self.inst.query(":ACQuire:MDEPth " + md))
         self.upd_current_info()        
         return self.memdepth
 
@@ -138,7 +138,7 @@ class Rigol:
 
     # Set main offset. time_s - time in secconds
     def set_main_offset(self, time_s ):
-        self.inst.query(":TIMebase:MAIN:OFFSet ", str(time_s))
+        self.inst.query(":TIMebase:MAIN:OFFSet " + str(time_s))
         self.upd_current_info()
         return self.main_offset_point
 
@@ -155,7 +155,7 @@ class Rigol:
     # Set main scale. time_s - time in secconds
     # Set_main_scale(0.003) - set 3ms scale
     def set_main_scale(self, time_s):
-        self.inst.write(":TIMebase:MAIN:SCALe ", str(time_s))
+        self.inst.write(":TIMebase:MAIN:SCALe " + str(time_s))
         self.upd_current_info() 
         return self.main_scale
 
