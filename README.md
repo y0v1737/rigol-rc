@@ -39,6 +39,8 @@ osc = Rigol('TCPIP::192.168.136.138::INSTR') # for LAN(LXI) device
 idn = osc.idn()
 print(idn)
 ```
+![Screenshot_1](https://github.com/y0v1737/rigol-rc/assets/128224033/08dfac8b-614a-427f-a3f1-6c7625ad80df)
+
 # Examples
 
 ```
