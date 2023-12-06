@@ -6,9 +6,9 @@
 
 ## Introduction
 
-This repository is a library for rigol oscilloscope remote control. Rigol oscilloscope support many **SCPI** commands through USB. This library is wrapper for SCPI rilol command.
+This repository is a library for rigol oscilloscope remote control. Rigol oscilloscope support many **SCPI** commands through USB or LAN. This library is wrapper for SCPI rigol command.
 
-`NOTE:` Library  was tested only for MSO5000 series.
+`NOTE:` Library  was tested only for MSO5000, DHO900, DHO800 series.
 ## Installation 
 
 1) Install python requirements:
@@ -26,14 +26,16 @@ pip install Pillow
 >>> import pyvisa
 >>> rm = pyvisa.ResourceManager()
 >>> rm.list_resources()
-('USB0::0x1AB1::0x0515::MS5A250901328::INSTR', 'ASRL18::INSTR')
+('USB0::0x1AB1::0x0515::MS5A250901328::INSTR', 'ASRL18::INSTR') # for USB device
+('TCPIP::192.168.136.138::INSTR',) # for LAN(LXI) device
 ```
 2) Include library & use:
 ```
 from rigolRC import Rigol
 
 # USE ID FROM PREVIOUS STEP
-osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR') 
+# osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR') # for USB device
+osc = Rigol('TCPIP::192.168.136.138::INSTR') # for LAN(LXI) device
 idn = osc.idn()
 print(idn)
 ```
@@ -42,7 +44,8 @@ print(idn)
 ```
 from rigolRC import Rigol
 
-osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR') 
+osc = Rigol('USB0::0x1AB1::0x0515::MS5A250901328::INSTR') # for USB device
+osc = Rigol('TCPIP::192.168.136.138::INSTR') # for LAN(LXI) device
 
 # print identificator
 print(osc.idn())
