@@ -126,7 +126,7 @@ class Rigol:
     # {AUTO|1k|10k|100k|1M|10M|25M|50M|100M|200M} - discrete
     # Example: set_memdepth("10M")
     def set_memdepth(self, md):
-        self.inst.query(":ACQuire:MDEPth " + md))
+        self.inst.query(":ACQuire:MDEPth " + md)
         self.upd_current_info()        
         return self.memdepth
 
