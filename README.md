@@ -13,7 +13,7 @@ This repository is a library for rigol oscilloscope remote control. Rigol oscill
 
 1) Install python requirements:
 ```
-pip install pyvisa
+pip install pyvisa pyvisa-py
 pip install Pillow
 ```
 2) Download rigolRC.py
