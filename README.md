@@ -15,6 +15,7 @@ This repository is a library for rigol oscilloscope remote control. Rigol oscill
 ```
 pip install pyvisa pyvisa-py
 pip install Pillow
+pip install matplotlib
 ```
 2) Download rigolRC.py
 3) Use class `Rigol` in your app
