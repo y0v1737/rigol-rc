@@ -13,6 +13,10 @@ class Rigol:
     def idn(self):
         return self.inst.query("*IDN?")
 
+    # get current trigger status
+    def get_trig_status(self)    
+        return self.inst.query(":TRIGger:STATus?")
+
     def expstr2int(self, str):
         n = str.split("E")
         if len(n) == 1:
@@ -39,7 +43,11 @@ class Rigol:
         plt.figure(figsize=(w,h))
         plt.plot(wave)
         plt.show()
-        
+       
+    # return True if trigger state is STOP   
+    def is_trig_stop(self):
+        return (self.get_trig_status() == 'STOP\n')
+
     # Save screen to internal drive     
     def scrn_int(self, drive="C", name=""):
         self.inst.write(":SAVE:IMAGe " + drive + ":\\" + name + ".png")
