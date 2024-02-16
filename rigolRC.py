@@ -14,7 +14,7 @@ class Rigol:
         return self.inst.query("*IDN?")
 
     # get current trigger status
-    def get_trig_status(self)    
+    def get_trig_status(self):    
         return self.inst.query(":TRIGger:STATus?")
 
     def expstr2int(self, str):
