@@ -1,6 +1,8 @@
+import struct
 import pyvisa
 from PIL import Image
 import io
+import matplotlib.pyplot as plt
 
 class Rigol:
     def __init__(self, resource):
@@ -17,6 +19,26 @@ class Rigol:
             return float(n[0])
         elif len(n) == 2:
             return float(n[0]) * (10 ** int(n[1], 10))
+
+    def wave2format(self, wave, wave_size, format_bits):
+        if format_bits == "WORD":
+            form = "<H"
+            step = 2
+        elif format_bits == "BYTE":
+            form = "<B"
+            step = 1
+        wave_b = []
+        for i in range(0, wave_size, step):
+            point = struct.unpack_from(form, wave[i:])[0]
+            wave_b.append(point)
+        return wave_b, len(wave_b)
+
+    # Show wave. Test function for choose frame for research.
+    # w & h -  figure size parametrs
+    def show_wave(self, wave, w=15, h=3):
+        plt.figure(figsize=(w,h))
+        plt.plot(wave)
+        plt.show()
         
     # Save screen to internal drive     
     def scrn_int(self, drive="C", name=""):
@@ -53,35 +75,46 @@ class Rigol:
 
     # Get wave only from display. Max 1000 points
     # Return <wave, wave_size>
-    def get_wave_norm(self, ch, points=1000):
+    # format_bits: BYTE - for 0-8bits osc, WORD - for 9-16bits osc.
+    # Example for 12bits oscilloscope: wave, wave_size = osc.get_wave_norm(1, "WORD")
+    # Example for 8bits oscilloscope: wave, wave_size = osc.get_wave_norm(1, "BYTE")
+    def get_wave_norm(self, ch, format_bits):
+        assert (format_bits == "BYTE") or (format_bits == "WORD")
         wave_data = []
+        points=1000
         self.inst.write(":WAVeform:SOUR CHAN" + str(ch))
-        self.inst.write(":WAV:MODE NORMal")
-        self.inst.write(":WAVeform:BYTE")
+        self.inst.write(":WAV:MODE NORM")
+        self.inst.write(":WAVeform:FORMat " + format_bits)
         self.inst.write(":WAVeform:POINts " + str(points))
         self.inst.write(":WAVeform:DATA?")
         self.inst.read_bytes(1)
         info_size = int(self.inst.read_bytes(1), 10)
         wave_size = int(self.inst.read_bytes(info_size),10)
         wave = self.inst.read_bytes(wave_size)
+        wave, wave_size = self.wave2format(wave, wave_size, format_bits)
         if points != wave_size:
             print("WARNING: expect " + str(points) + ", given " + str(wave_size))
         return wave, wave_size
         
     # Get RAW wave from internal memory
     # Return <wave, wave_size>
-    def get_wave_raw(self, ch, start_position, points):
+    # format_bits: BYTE - for 0-8bits osc, WORD - for 9-16bits osc.
+    # Example for 12bits oscilloscope: wave, wave_size = osc.get_wave_raw(1, 0, 1000, "WORD")
+    # Example for 8bits oscilloscope: wave, wave_size = osc.get_wave_raw(1, 0, 1000, "BYTE")
+    def get_wave_raw(self, ch, start_position, points, format_bits):
+        assert (format_bits == "BYTE") or (format_bits == "WORD")
         wave_data = []
         self.inst.write(":WAVeform:SOUR CHAN" + str(ch))
-        self.inst.write(":WAV:MODE RAW")
-        self.inst.write(":WAVeform:BYTE")
+        self.inst.write(":WAV:MODE NORM")
+        self.inst.write(":WAVeform:FORMat " + format_bits)
         self.inst.write(":WAVeform:STARt " + str(start_position))
         self.inst.write(":WAVeform:POINts " + str(points))    
         self.inst.write(":WAVeform:DATA?")
         self.inst.read_bytes(1)
         info_size = int(self.inst.read_bytes(1), 10)
         wave_size = int(self.inst.read_bytes(info_size),10)
-        wave = self.inst.read_bytes(wave_size)
+        wave = self.inst.read_bytes(wave_size)   
+        wave, wave_size = self.wave2format(wave, wave_size, format_bits)
         if points != wave_size:
             print("WARNING: expect " + str(points) + ", given " + str(wave_size))
         return wave, wave_size
