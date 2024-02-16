@@ -84,6 +84,8 @@ osc.show_wave(wave)
 osc.get_trig_position()
 
 # Get wave from trigger with 2 cell len
+osc.trig_single()
+...do something 
 NUM_CELL = 2
 wave, wave_size = osc.get_wave_raw(1, osc.trig_position_point, osc.points_in_cell * NUM_CELL, "WORD")
 osc.show_wave(wave)
