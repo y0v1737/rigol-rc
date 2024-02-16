@@ -67,13 +67,18 @@ osc.lsetup("set-for_glitch")
 osc.grid(100)
 
 # get wave RAW
-wave, wave_size = osc.get_wave_raw(ch=1, start_position=0, points=100000)
+wave, wave_size = osc.get_wave_raw(ch=1, start_position=0, points=100000, "WORD") # for 9-16 bits oscilloscope
+wave, wave_size = osc.get_wave_raw(1, 0, 1000, "BYTE") # for 0-8  bits oscilloscope
 
 # get wave only from display
-wave, wave_size = osc.get_wave_norm(ch=1)
+wave, wave_size = osc.get_wave_norm(ch=1, "WORD") # for 9-16 bits oscilloscope
+wave, wave_size = osc.get_wave_norm(ch=1, "BYTE") # for 0-8  bits oscilloscope
 
 # set trigger mode: single
 osc.trig_single()
+
+# Show waveform in figure
+osc.show_wave(wave)
 
 # get trigger position
 osc.get_trig_position()
