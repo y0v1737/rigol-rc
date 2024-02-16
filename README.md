@@ -87,6 +87,6 @@ osc.get_trig_position()
 osc.trig_single()
 ...do something 
 NUM_CELL = 2
-wave, wave_size = osc.get_wave_raw(1, osc.trig_position_point, osc.points_in_cell * NUM_CELL, "WORD")
+wave, wave_size = osc.get_wave_raw(1, osc.trig_position_point, osc.points_in_cell * NUM_CELL, "BYTE")
 osc.show_wave(wave)
 ```
