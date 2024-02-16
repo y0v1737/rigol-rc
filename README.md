@@ -70,7 +70,7 @@ osc.grid(100)
 wave, wave_size = osc.get_wave_raw(ch=1, start_position=0, points=100000, "WORD") # for 9-16 bits oscilloscope
 wave, wave_size = osc.get_wave_raw(1, 0, 1000, "BYTE") # for 0-8  bits oscilloscope
 
-# get wave only from display. BAD WAY. returnt just 1000 points.
+# get wave only from display. BAD WAY. DON't use it. return just 1000 points.
 wave, wave_size = osc.get_wave_norm(ch=1, "WORD") # for 9-16 bits oscilloscope
 wave, wave_size = osc.get_wave_norm(ch=1, "BYTE") # for 0-8  bits oscilloscope
 
