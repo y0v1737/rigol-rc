@@ -105,7 +105,7 @@ class Rigol:
         assert (format_bits == "BYTE") or (format_bits == "WORD")
         wave_data = []
         self.inst.write(":WAVeform:SOUR CHAN" + str(ch))
-        self.inst.write(":WAV:MODE NORM")
+        self.inst.write(":WAV:MODE RAW")
         self.inst.write(":WAVeform:FORMat " + format_bits)
         self.inst.write(":WAVeform:STARt " + str(start_position))
         self.inst.write(":WAVeform:POINts " + str(points))    
