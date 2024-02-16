@@ -91,6 +91,6 @@ wave, wave_size = osc.get_wave_raw(1, osc.trig_position_point, osc.points_in_cel
 osc.show_wave(wave)
 
 # Test trigger state STOP
-# Return True if trigger in STOP state
+# Return True if trigger status STOP
 osc.is_trig_stop()
 ```
